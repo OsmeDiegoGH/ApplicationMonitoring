@@ -1,0 +1,3 @@
+serverlog.habilitado        = true
+ENVIROMENT                  = prod
+ODBC_DATASOURCE             = java:jboss/datasources/AcertumDatabasePersistenceUnit

@@ -1,0 +1,15 @@
+<div class="modal-form" ng-show="modalFormCtrl.showForm">
+    <div class="modal-background" ></div>    
+    <div class="modal-content {{ modalFormCtrl.modalSize }}">
+        <ng-form novalidate name="modalFormCtrl.{{ modalFormCtrl.formName }}" class="{{ modalFormCtrl.formClass }}" role="form">
+            <div class="modal-fields" ng-transclude="fields"></div>
+            <div class="modal-separator"><label></label></div>
+            <div class="modal-buttons" ng-transclude="buttons">               
+                <div class="col-xs-12">
+                    <a class="btn btn-default col-xs-{{ modalFormCtrl.colsBtns }}" ng-click="modalFormCtrl.close()">{{ modalFormCtrl.closeBtnText }}</a>
+                    <button type="submit" class="btn btn-primary col-xs-{{ modalFormCtrl.colsBtns }} col-xs-offset-{{ modalFormCtrl.colsOffsetSaveBtn }}" ng-click="modalFormCtrl.submit()" ng-keypress="modalFormCtrl.keyPress()" ng-show="modalFormCtrl.showSubmitBtn">{{ modalFormCtrl.saveBtnText }}</button>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+</div>

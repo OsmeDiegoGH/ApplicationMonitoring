@@ -1,0 +1,45 @@
+#messages{
+    position: fixed;
+    width: 100%;
+    z-index: 1000100;
+
+    p{
+        overflow: hidden;
+        padding: 15px 0px;
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 0px 0px 2px 0px;
+
+        &.message-error{
+            background-color: #ff4e4e;
+        }
+        &.message-warning{
+            background-color: #fffb79;
+            color: #737373;
+        }
+        &.message-info{
+            background-color: #79b5ff;
+        }
+        
+        label{
+            float: left;
+            width: 95%;
+            margin: 0px;
+            color: white;
+        }
+        a.btn-close{
+            float: left;
+            width: 5%;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+            vertical-align: text-top;
+            
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+}

@@ -1,0 +1,163 @@
+<div>
+    <modal-form modal-size="lg" form-name="scheduleForm" form-class="form-schedule" show-form="scheduleFormCtrl.show" on-show="scheduleFormCtrl.initForm" on-submit="scheduleFormCtrl.save">
+        <modal-form-fields>   
+            <div class="col-xs-4 left-column">
+                <div class="form-group">
+                    <label class="col-xs-12 p-0">Identificador</label>
+                    <div class="col-xs-12 p-0">
+                        <input type="text" class="form-control" ng-model="scheduleFormCtrl.model.name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-5 p-0">Fecha Inicio</label>
+                    <label class="col-xs-5 col-xs-offset-2 p-0">Fecha Fin</label>
+                    <div class="col-xs-6 p-0">
+                        <input type="date" class="form-control" ng-model="scheduleFormCtrl.model.initDate" required>
+                    </div>
+                    <div class="col-xs-6 p-0">
+                        <input type="date" class="form-control" ng-model="scheduleFormCtrl.model.endDate" min="{{ scheduleFormCtrl.model.initDate|date:'yyyy-MM-dd' }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 p-0">Frecuencia(minutos)</label>
+                    <div class="col-xs-2 p-0">
+                        <input type="text" class="form-control" ng-model="scheduleFormCtrl.model.frecuency" only-numbers required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 p-0">Emails de Alerta</label>
+                    <div class="col-xs-12 p-0 email-list">
+                        <tags-input 
+                            ng-model="scheduleFormCtrl.model.emailAlertList"
+                            enable-editing-last-tag="true"
+                            add-on-paste="true"
+                            add-on-space="true"
+                            min-tags="1"
+                            allowed-tags-pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                            placeholder="Agrega un email a la lista"
+                            ></tags-input>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 right-column">
+                <div class="form-group">
+                    <div class="col-xs-2 p-0">
+                        <select class="form-control" ng-model="scheduleFormCtrl.model.requestMethod" required>
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-10 p-0">
+                        <input type="text" name="request-url" class="form-control" ng-model="scheduleFormCtrl.model.requestUrl" placeholder="url servicio" required>
+                    </div>
+                </div>
+                <div class="col-xs-12 tabs">
+                    <ul class="nav nav-tabs">
+                        <li ng-class="{'active': scheduleFormCtrl.currentTab === 'headers'}" ng-click="scheduleFormCtrl.currentTab = 'headers'">
+                            <a href="">Headers</a>
+                        </li>
+                        <li ng-class="{'active': scheduleFormCtrl.currentTab === 'body'}" ng-click="scheduleFormCtrl.currentTab = 'body'">
+                            <a href="">Body Parameters</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-header col-xs-12" ng-show="scheduleFormCtrl.currentTab === 'headers'">
+                    <div class="form-group" ng-repeat="header in scheduleFormCtrl.model.requestHeaders">
+                        <div class="col-xs-4 p-0">
+                            <select class="form-control" ng-model="header.key">
+                                <option value="CONTENT_TYPE">Content-Type</option>
+                                <option value="ACCEPT">Accept</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 p-0 text-center">=</div>
+                        <div class="col-xs-6 p-0">
+                            <select class="form-control" ng-model="header.value">
+                                <option value="FORM_DATA">x-www-form-urlencoded</option>
+                                <option value="XXX_FORM_URLENCODED">multipart/form-data</option>
+                                <option value="APPLICATION_JSON">application/json</option>
+                                <option value="APPLICATION_XML">application/xml</option>
+                                <option value="TEXT_PLAIN">text/plain</option>
+                                <option value="TEXT_HTML">text/html</option>
+                                <option value="TEXT_CSV">text/csv</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1">
+                            <img class="custom-header-img" ng-click="scheduleFormCtrl.deleteRequestHeaderFromList($index)" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/minus.png" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4 p-0">
+                            <input type="text" class="form-control" disabled>
+                        </div>
+                        <div class="col-xs-1 p-0 text-center">=</div>
+                        <div class="col-xs-6 p-0">
+                            <input type="text" class="form-control" disabled>
+                        </div>
+                        <div class="col-xs-1">
+                            <img class="custom-header-img" ng-click="scheduleFormCtrl.addEmptyRequestHeader()" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/add_green.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-body col-xs-12" ng-show="scheduleFormCtrl.currentTab === 'body'">             
+                    <div class="body-parameters">
+                        <div class="form-group" ng-repeat="bodyParameter in scheduleFormCtrl.model.requestBodyParameters">
+                            <div class="col-xs-3 p-0">
+                                <input type="text" class="form-control" ng-model="bodyParameter.key">
+                            </div>
+                            <div class="col-xs-1 p-0 text-center">=</div>
+                            <div class="col-xs-7 p-0">
+                                <input type="text" class="form-control" ng-model="bodyParameter.value">
+                            </div>
+                            <div class="col-xs-1">
+                                <img class="custom-header-img" ng-click="scheduleFormCtrl.deleteRequestParameterFromList($index)" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/minus.png" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-3 p-0">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                            <div class="col-xs-1 p-0 text-center">=</div>
+                            <div class="col-xs-7 p-0">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                            <div class="col-xs-1">
+                                <img class="custom-header-img" ng-click="scheduleFormCtrl.addEmptyRequestParameter()" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/add_green.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <div class="col-xs-2 p-0">
+                        <label>Resultado Esperado</label>
+                        <select class="form-control" ng-model="scheduleFormCtrl.expectedResultOption">
+                            <option value="HTTP_200">Http 200</option>
+                            <option value="CUSTOM">Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-7" ng-if="scheduleFormCtrl.expectedResultOption !== 'HTTP_200'">
+                        <textarea rows="8" class="form-control" ng-model="scheduleFormCtrl.expectedResultCustom"></textarea>
+                    </div>
+                    <div class="test-column" ng-hide="scheduleFormCtrl.isEmpty(scheduleFormCtrl.model.requestUrl);">
+                        <div class="col-xs-2">
+                            <button class="btn btn-info btn-test" ng-click="scheduleFormCtrl.testRequest()" ng-disabled="scheduleFormCtrl.isTestInProgress">Probar petición</button>
+                        </div>
+                        <div class="col-xs-1 p-0" ng-show="scheduleFormCtrl.isTestInProgress">
+                            <img class="test-img" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/loading_small.gif"/>
+                        </div>
+                        <div class="col-xs-1 p-0" ng-show="scheduleFormCtrl.showBadRequestIcon">
+                            <img class="test-img" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/close.png"/>
+                        </div>
+                        <div class="col-xs-1 p-0" ng-show="scheduleFormCtrl.showSuccessRequestIcon">
+                            <img class="test-img" ng-src="{{ scheduleFormCtrl.URL_RESOURCES}}/images/check_green.png"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="text-danger">{{ scheduleFormCtrl.requestError }}</p>
+                </div>
+            </div>
+        </modal-form-fields>
+    </modal-form>
+</div>

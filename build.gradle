@@ -1,0 +1,61 @@
+apply plugin: 'war'
+
+repositories {
+
+    def internalRepository = releaseArtifactoryRepository
+    
+    maven {
+        url internalRepository
+
+        credentials {
+            username user
+            password pwd
+        }
+    }
+}
+
+dependencies {
+    providedCompile "javax.servlet:javax.servlet-api:3.0.1"
+    
+    compile "com.google.code.gson:gson:2.2.4",
+            "axis:axis:1.4",
+            "acertum.web.arquitectura:genericos-central:1.0",
+            "com.acertum.common:log4CentralC3:V3",
+            "log4j:log4j:1.2.17",
+            "org.springframework.security:spring-security-config:3.2.5.RELEASE",
+            "org.springframework.security:spring-security-web:3.2.5.RELEASE",
+            "org.springframework:spring-webmvc:4.3.4.RELEASE",
+            "kr.pe.kwonnam.jsp:jsp-template-inheritance:0.3.RELEASE",
+            "org.codehaus.jackson:jackson-core-asl:1.9.13",
+            "org.codehaus.jackson:jackson-mapper-asl:1.9.13",
+            "javax.annotation:javax.annotation-api:1.2",
+            "com.baz:FakeBuilder:0.3.0",
+            "org.quartz-scheduler:quartz:2.2.1",
+            "org.springframework.data:spring-data-mongodb:1.9.4.RELEASE",
+            "org.mongodb:mongo-java-driver:3.3.0",
+            "javax.mail:javax.mail-api:1.4.7"
+}
+
+def IS_WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
+    
+def jbossDir = (IS_WINDOWS) ? jbossDir_WINDOWS : jbossDir_UNIX;
+task deploy << {
+    def warName = rootProject.name + ".war"
+    def mainPropertiesName = rootProject.name + ".properties"
+    def logPropertiesName = rootProject.name + "Log.properties"
+    
+    copy{
+        from(file("$buildDir/libs/$warName"))
+        into("$jbossDir/standalone/deployments")
+    }
+    copy{
+        from(file("$rootDir/$propertiesDir/$mainPropertiesName"))
+        into("$jbossDir/standalone/configuration/Applications/")
+    }
+    copy{
+        from(file("$rootDir/$propertiesDir/$logPropertiesName"))
+        into("$jbossDir/standalone/configuration/Applications/")
+    }
+}
+
+build.finalizedBy(deploy)

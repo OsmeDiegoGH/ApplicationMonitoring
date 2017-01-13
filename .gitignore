@@ -1,0 +1,9 @@
+/.gradle/
+/.nb-gradle/
+/bower_components/
+/node_modules/
+/private/
+/build/
+/src/main/webapp/resources/libs/
+/src/main/webapp/resources/modules/
+/src/main/webapp/resources/vendor/

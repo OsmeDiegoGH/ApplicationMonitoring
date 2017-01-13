@@ -1,0 +1,72 @@
+.schedules-list{
+    padding: 10px 5px;
+
+    .list-actions{
+        padding-bottom: 10px;
+    }
+    .list-content{
+        .list-item{
+            padding: 15px 0px;
+            border-bottom: 1px solid #efefef;
+
+            &:hover{
+                background-color: #f7f8f9;
+                
+                .schedule-name{
+                    color: #337ab7;
+                }
+            }
+            & > div{
+                margin: 5px 0px;
+            }
+            .schedule-name{
+                text-decoration: none;
+                color: inherit;
+
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            .btn-delete{
+                display: none;
+                height: 25px;
+                width: auto;
+                margin-top: -5px;
+                cursor: pointer;
+            }
+            &:hover{
+                .btn-delete{
+                    display: block;
+                }
+            }
+            .switch{
+                background: rgb(255, 112, 112);
+                border-color: rgb(255, 57, 57);
+                height: 25px;
+                width: 40px;
+
+                &.checked {
+                    background: #418bca;
+                    border-color: #1738da;
+                    
+                    small{
+                        left: 15px;
+                    }
+                }
+                small{
+                    height: 25px;
+                    width: 25px;
+                }
+            }
+        }
+        .search-items{
+            float: right;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+
+            &.on-top{
+                margin-top: -60px;
+            }
+        }
+    }    
+}

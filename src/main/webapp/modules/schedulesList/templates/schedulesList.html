@@ -1,0 +1,29 @@
+<div class="schedules-list">
+    <div class="list-actions col-xs-4 col-xs-offset-8 text-right">
+        <a class="btn-new btn btn-default" ng-click="schedulesListCtrl.showEmptyForm()">Agregar petición <img ng-src="{{ schedulesListCtrl.URL_RESOURCES }}/images/add_blue.png"/></a>
+    </div>
+    <div class="list-content col-xs-12">
+        <div class="col-xs-12 p-0 list-item" ng-repeat="item in schedulesListCtrl.schedulesListService.list">
+            <div class="col-xs-4">
+                <a href="" class="schedule-name" ng-click="schedulesListCtrl.editSchedule(item.uniqueId)">{{ item.name }}</a>
+            </div>
+            <div class="col-xs-2">{{ item.frecuency }}</div>
+            <div class="col-xs-2">{{ item.applyDate }}</div>
+            <div class="col-xs-1">
+                <switch ng-model="item.isActive" ng-change="schedulesListCtrl.switchStatusChanged(item)"></switch>
+            </div>
+            <div class="col-xs-1">
+                <img class="btn-delete" ng-src="{{ schedulesListCtrl.URL_RESOURCES }}/images/trash_sm.png" ng-click="schedulesListCtrl.deleteSchedule(item.uniqueId)"/>
+            </div>
+        </div>
+        <div class="search-items" ng-show="schedulesListCtrl.showFilteredRecordsText"><b>{{ schedulesListCtrl.recordsFiltered }}</b> registro(s) encontrado(s)</div>
+    </div>
+    <schedule-form show="schedulesListCtrl.showForm" model="schedulesListCtrl.currentSchedule"></schedule-form>
+    <modal-form modal-size="sm" form-name="confirmModal" show-form="schedulesListCtrl.showModalConfirm" on-submit="schedulesListCtrl.confirmModalOnSubmit" save-btn-text="Aceptar">
+        <modal-form-fields>   
+            <div class="form-group">
+                <label class="col-xs-12">{{ schedulesListCtrl.confirmModalMessage }}</label>
+            </div>
+        </modal-form-fields>
+    </modal-form>
+</div>

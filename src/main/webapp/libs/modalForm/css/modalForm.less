@@ -1,0 +1,82 @@
+.modal-form{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    overflow: scroll;
+    z-index: 1000000;        
+
+    .modal-background{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.4;
+        z-index: 1000001;        
+    }
+
+    .modal-content{
+        position: absolute;
+        top: 5%;
+        padding: 1%;
+        box-shadow: 0px 2px 15px;
+        border-radius: 10px;
+        background-color: white;
+        z-index: 1000002;        
+
+        &.sm{
+            width: 40%;    
+            left: 30%;
+        }
+        &.md{
+            width: 60%;   
+            left: 20%;
+        }
+        &.lg{
+            width: 80%;    
+            left: 10%;
+        }
+        ng-form{
+            &.ng-submitted{
+                input,
+                select,
+                textarea{
+                    &.ng-invalid{
+                        border-color: #f94b4b;
+
+                        &:focus{
+                            box-shadow: 0px 0px 7px #f74141;
+                        }
+                    }
+                }  
+            }
+            input[type="text"],
+            select,
+            textarea{
+                &.ng-dirty.ng-invalid{
+                    border-color: #f94b4b;
+
+                    &:focus{
+                        box-shadow: 0px 0px 7px #f74141;
+                    }
+                }
+            }    
+        }
+        .modal-buttons{
+            overflow: hidden;
+        }
+        .modal-separator{
+            text-align: center;
+
+            label{
+                width: 95%;
+                margin: 15px 0px;
+                border-bottom: 1px solid lightgray;
+            }
+        }
+        .modal-fields{
+           overflow: hidden;
+        }
+    }
+}
